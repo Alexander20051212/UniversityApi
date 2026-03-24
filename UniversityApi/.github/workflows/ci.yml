@@ -1,0 +1,26 @@
+﻿name: CI
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Получение кода репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Восстановление зависимостей
+        run: dotnet restore UniversityApi/UniversityApi/UniversityApi.csproj
+
+      - name: Сборка проекта
+        run: dotnet build UniversityApi/UniversityApi/UniversityApi.csproj --no-restore --configuration Release

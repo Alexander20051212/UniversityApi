@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+</head>
+<body>
+
+    <h1>Students</h1>
+
+    <button onclick="loadStudents()">Загрузить студентов</button>
+
+    <ul id="studentsList"></ul>
+
+    <h2>Добавить студента</h2>
+
+    <input id="name" placeholder="Имя" />
+    <input id="age" type="number" placeholder="Возраст" />
+
+    <button onclick="addStudent()">Добавить</button>
+
+    <script>
+    const apiUrl = "http://localhost:5000/api/students";
+
+    async function loadStudents() {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const list = document.getElementById("studentsList");
+        list.innerHTML = "";
+
+        data.forEach(s => {
+            const li = document.createElement("li");
+            li.textContent = s.name + " (" + s.age + ")";
+            list.appendChild(li);
+        });
+    }
+
+    async function addStudent() {
+        const name = document.getElementById("name").value;
+        const age = parseInt(document.getElementById("age").value);
+
+        await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, age })
+        });
+
+        loadStudents();
+    }
+    </script>
+
+</body>
+</html>

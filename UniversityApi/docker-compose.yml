@@ -1,0 +1,86 @@
+﻿services:
+  postgres_db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: universitydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - university_net
+
+  redis_cache:
+    image: redis:7
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    networks:
+      - university_net
+
+  university_api:
+    build: .
+    container_name: university_api
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      redis_cache:
+        condition: service_started
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=universitydb;Username=postgres;Password=postgres
+    ports:
+      - "5000:8080"
+    networks:
+      - university_net
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - university_api
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - university_net
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - university_net
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - university_net
+
+volumes:
+  postgres_data:
+  grafana_data:
+
+networks:
+  university_net:
+    driver: bridge
