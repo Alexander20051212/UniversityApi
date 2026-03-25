@@ -20,7 +20,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Восстановление зависимостей
-        run: dotnet restore UniversityApi/UniversityApi/UniversityApi.csproj
+        run: dotnet restore UniversityApi/UniversityApi.csproj
 
       - name: Сборка проекта
-        run: dotnet build UniversityApi/UniversityApi/UniversityApi.csproj --no-restore --configuration Release
+        run: dotnet build UniversityApi/UniversityApi.csproj --no-restore --configuration Release
