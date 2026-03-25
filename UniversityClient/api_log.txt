@@ -1,0 +1,3 @@
+[2026-03-25 10:24:51] GET /api/students | 200 | 488ms
+[2026-03-25 10:24:51] POST /api/students | 201 | 647ms
+[2026-03-25 10:24:52] GET /api/students/1 | 200 | 214ms
