@@ -59,78 +59,75 @@
 
 📊 Мониторинг системы
 Prometheus
-
 Собирает метрики с API:
-
-HTTP запросы
-Время ответа
-Ошибки
+- HTTP запросы
+- Время ответа
+- Ошибки
 
 Endpoint:
-
-http://localhost:5000/metrics
-Grafana
-
+-http://localhost:5000/metrics
+- Grafana
 Используется для построения дашбордов.
 
 Доступ:
-
-http://localhost:3000
-
+- http://localhost:3000
 Логин/пароль:
+- admin / admin
 
-admin / admin
 📈 Примеры метрик
 
 Минимум 3 метрики:
+- Количество HTTP-запросов
+- Время обработки запросов
+- Количество ошибок
 
-Количество HTTP-запросов
-Время обработки запросов
-Количество ошибок
 🖥 Пользовательский интерфейс
 
 В рамках проекта реализован веб-интерфейс (или используется Swagger UI):
-
-http://localhost:5000/swagger
+- http://localhost:5000/swagger
 
 Позволяет:
+- Тестировать API
+- Отправлять запросы
+- Просматривать ответы
 
-Тестировать API
-Отправлять запросы
-Просматривать ответы
 ⚙ Запуск проекта
+
 🔹 1. Сборка и запуск
-docker-compose up --build
+- docker-compose up --build
+
 🔹 2. Проверка сервисов
-API → http://localhost:5000
-Swagger → http://localhost:5000/swagger
-Metrics → http://localhost:5000/metrics
-Grafana → http://localhost:3000
-Prometheus → http://localhost:9090
+- API → http://localhost:5000
+- Swagger → http://localhost:5000/swagger
+- Metrics → http://localhost:5000/metrics
+- Grafana → http://localhost:3000
+- Prometheus → http://localhost:9090
+
 🔎 Принцип работы приложения
-API принимает HTTP-запрос
-Обрабатывает через контроллер
-Обращается к сервисам
-При необходимости использует Redis (кэш)
-Сохраняет/читает данные из PostgreSQL
-Метрики отправляются в Prometheus
-Grafana отображает данные в виде графиков
+
+- API принимает HTTP-запрос
+- Обрабатывает через контроллер
+- Обращается к сервисам
+- При необходимости использует Redis (кэш)
+- Сохраняет/читает данные из PostgreSQL
+- Метрики отправляются в Prometheus
+- Grafana отображает данные в виде графиков
+
 🎓 Назначение проекта
 
 Проект разработан в рамках лабораторной работы по дисциплине, связанной с:
-
-разработкой серверных приложений
-контейнеризацией
-мониторингом систем
-распределёнными сервисами
+- разработкой серверных приложений
+- контейнеризацией
+- мониторингом систем
+- распределёнными сервисами
 
 В ходе выполнения были изучены:
+- ASP.NET Core Web API
+- Docker и Docker Compose
+- Работа с PostgreSQL
+- Кэширование (Redis)
+- Мониторинг (Prometheus + Grafana)
 
-ASP.NET Core Web API
-Docker и Docker Compose
-Работа с PostgreSQL
-Кэширование (Redis)
-Мониторинг (Prometheus + Grafana)
 👨‍💻 Автор
 
 ФИО: Макухин Александр Сергеевич
