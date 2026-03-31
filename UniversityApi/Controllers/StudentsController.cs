@@ -4,6 +4,7 @@ using StackExchange.Redis;
 using System.Text.Json;
 using UniversityApi.Data;
 using UniversityApi.Models;
+using System.Linq;
 
 namespace UniversityApi.Controllers;
 
@@ -34,7 +35,7 @@ public class StudentsController : ControllerBase
             return students;
         }
 
-        var data = await _context.Students.ToListAsync();
+        var data = await _context.Students.OrderBy(s => s.Id).ToListAsync();
 
         var json = JsonSerializer.Serialize(data);
 
